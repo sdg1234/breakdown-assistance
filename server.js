@@ -18,6 +18,15 @@ app.get('/ping', function(req, res) {
     res.send('pong');
 });
 
+app.get('/message', function(req, res) {
+    
+    var message = req.query.userInput;
+    message = encodeURIComponent(message.trim());
+    var response = "The user input is: "+message;
+    
+    res.send(message);
+});
+
 var port=Number(process.env.PORT || 3001);
 app.listen(port, function() {
     console.log('listening on port: *' + port);
