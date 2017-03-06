@@ -21,11 +21,21 @@ app.get('/ping', function(req, res) {
 app.get('/message', function(req, res) {
     
     var message = req.query.userInput;
-    message = encodeURIComponent(message.trim());
-    var response = "The user input is: "+message;
     
-    res.send(message);
+    
+    function callback(data) {
+        res.send(data);
+    }
+    
+    assistance(message, callback);
+    
+//    res.send(message);
 });
+
+function assistance(message, callback) {
+    message = encodeURIComponent(message.trim());
+    callback(message);
+}
 
 var port=Number(process.env.PORT || 3001);
 app.listen(port, function() {
