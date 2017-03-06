@@ -1,0 +1,7 @@
+{
+  "name": "breakdown-assistance",
+  "description": "breakdown assistance",
+  "repository": "https://github.com/sdg1234/breakdown-assistance",
+  "keywords": ["node", "express", "static"],
+  "image": "heroku/nodejs"
+}
