@@ -20,21 +20,38 @@ app.get('/ping', function(req, res) {
 
 app.get('/message', function(req, res) {
     
-    var message = req.query.userInput;
-    
-    
-    function callback(data) {
+    function sendback(data) {
         res.send(data);
     }
     
-    assistance(message, callback);
+    var message = req.query.userInput;    
+    assistance(message, sendback);
     
 //    res.send(message);
 });
 
-function assistance(message, callback) {
+function assistance(message, sendback) {
     message = encodeURIComponent(message.trim());
-    callback(message);
+    var headers = {
+        'Authorization': 'Bearer 56bf6af2d8b842389fc4bc4775e56ff9'
+    };
+
+    var options = {
+        url: 'https://api.api.ai/api/query?v=20150910&query=' + message + '&lang=en&sessionId=8b0a70e7-116d-4c61-8aa9-c914acee843c&timezone=2017-03-06T12:53:15+0530',
+        headers: headers
+    };
+
+    function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var response = body;
+            response = JSON.parse(response);
+            console.log(response.result.parameters);
+            sendback(response.result);
+
+        }
+    }
+    request(options, callback);
+    
 }
 
 var port=Number(process.env.PORT || 3001);
